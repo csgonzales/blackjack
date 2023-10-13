@@ -12,7 +12,7 @@ mvn clean package
 After that, you will find a jar file in:
 
 ```bash
-/target/blackjack-1.0-SNAPSHOT-jar-with-dependencies.
+/target/blackjack-1.0-SNAPSHOT-jar-with-dependencies
 ```
 ## Usage
 
