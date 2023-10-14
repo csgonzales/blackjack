@@ -6,7 +6,7 @@ import java.util.List;
 public class PlayerImpl implements Player {
 
     private final List<Card> cards = new LinkedList<>();
-    private String name;
+    private final String name;
 
     public PlayerImpl(String name) {
         this.name = name;
