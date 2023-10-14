@@ -1,9 +1,6 @@
 package br.com.blackjack.domain;
 
-import br.com.blackjack.domain.exception.MatchAlreadyEndedException;
-import br.com.blackjack.domain.exception.MatchNotEndedException;
-import br.com.blackjack.domain.exception.MatchNotStartedException;
-import br.com.blackjack.domain.exception.MatchRequiresAtLeastTwoPlayersException;
+import br.com.blackjack.domain.exception.*;
 
 import java.text.MessageFormat;
 import java.util.*;
@@ -15,6 +12,7 @@ public class Match {
 
     private final Deck deck;
     private final List<Player> players = new ArrayList<>(4);
+    private final Configurations configurations = new Configurations();
     private Player winner;
     private final Set<Player> losers = new HashSet<>();
     private int next = 0;
@@ -31,7 +29,7 @@ public class Match {
     }
 
     public Match addPlayer(Player player) {
-        if(!started && !isEnded())
+        if(!isStarted())
             players.add(player);
         return this;
     }
@@ -40,9 +38,22 @@ public class Match {
         return addPlayer(Player.newPlayer(playerName));
     }
 
+    public List<Player> players() {
+        return Collections.unmodifiableList(players);
+    }
+
     public void start() {
-        if(players.size() < 2) {
+        if(players.size() < 2 && !configurations.isVersusDealer()) {
             throw new MatchRequiresAtLeastTwoPlayersException();
+        } else if(players.size() > configurations.getPlayersLimit()) {
+            throw new PlayersExceedLimitException(configurations().getPlayersLimit());
+        }
+
+        if(configurations.isVersusDealer()) {
+            players.clear();
+            log("Player vs Dealer ...");
+            addPlayer("Player");
+            addPlayer("Dealer");
         }
         log("Shuffling deck ...");
         deck.shuffle();
@@ -86,10 +97,60 @@ public class Match {
                 .orElseThrow(MatchNotEndedException::new);
     }
 
+    public Configurations configurations() {
+        return configurations;
+    }
+
+    public Match aceAsEleven() {
+        if(!isStarted()) {
+            configurations.setAceAsEleven(true);
+            log("Configure ace value as ELEVEN ...");
+        }
+        return this;
+    }
+
+    public Match aceAsOne() {
+        if(!isStarted()) {
+            configurations.setAceAsEleven(false);
+            log("Configure ace value as ONE ...");
+        }
+        return this;
+    }
+
+    public Match playersLimit(int playersLimit) {
+        if(!isStarted() && playersLimit >= 2) {
+            configurations.setPlayersLimit(playersLimit);
+            log("Configure players limit as {0} ...", playersLimit);
+        }
+        return this;
+    }
+
+    public Match versusDealer() {
+        if(!isStarted()) {
+            configurations.setVersusDealer(true);
+            log("Configure Player versus Dealer ...");
+        }
+        return this;
+    }
+
+    public Match versusPlayers() {
+        if(!isStarted()) {
+            configurations.setVersusDealer(false);
+            log("Configure Player versus Player ...");
+        }
+        return this;
+    }
+
     private void draw(Player player) {
-        final var card = deck.draw();
+        final var card = adjustValue(deck.draw());
         log("{0} draw card: {1}", player.name(), card);
         player.addCard(card);
+    }
+
+    private Card adjustValue(Card card) {
+        if(card.value() == Value.ACE && configurations().isAceAsEleven())
+            return new Card(card.suit(), new AdjustedValue(card.value(), 11));
+        return card;
     }
 
     private void log(String message, Object... values) {

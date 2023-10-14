@@ -21,8 +21,7 @@ public class Main {
 
     public static void startMatch() throws InterruptedException {
         final var match = new Match()
-                .addPlayer("Player")
-                .addPlayer("Dealer");
+                .versusDealer();
 
 
         match.start();

@@ -1,6 +1,6 @@
 package br.com.blackjack.domain;
 
-public enum Value {
+public enum Value implements CardValue {
 
     ACE(1),
     TWO(2),
@@ -22,6 +22,7 @@ public enum Value {
 
     private final int val;
 
+    @Override
     public int getVal() {
         return val;
     }

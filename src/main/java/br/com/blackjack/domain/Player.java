@@ -1,5 +1,7 @@
 package br.com.blackjack.domain;
 
+import java.util.List;
+
 public interface Player {
 
     int points();
@@ -7,6 +9,8 @@ public interface Player {
     boolean addCard(Card card);
 
     String name();
+
+    List<Card> cards();
 
     void removeCards();
 

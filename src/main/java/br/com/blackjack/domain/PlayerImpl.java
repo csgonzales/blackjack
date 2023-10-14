@@ -1,5 +1,6 @@
 package br.com.blackjack.domain;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,6 +29,11 @@ public class PlayerImpl implements Player {
     @Override
     public String name() {
         return name;
+    }
+
+    @Override
+    public List<Card> cards() {
+        return Collections.unmodifiableList(cards);
     }
 
     @Override
