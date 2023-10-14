@@ -68,7 +68,8 @@ public class Main {
     }
 
     public static void startMatch(Configurations configurations) throws InterruptedException {
-        final var match = new Match();
+        final var match = new Match()
+                .versusDealer();
 
         if(configurations.hasParam(Configurations.ACE_AS_ELEVEN)) {
             match.aceAsEleven();
