@@ -143,7 +143,7 @@ public class Match {
 
     private void draw(Player player) {
         final var card = adjustValue(deck.draw());
-        log("{0} draw card: {1}", player.name(), card);
+        log("{0} draws card: {1}", player.name(), card);
         player.addCard(card);
     }
 
