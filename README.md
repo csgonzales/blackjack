@@ -20,4 +20,13 @@ As a jar file, you can execute it running:
 ```bash
 java -jar blackjack-1.0-SNAPSHOT-jar-with-dependencies
 ```
-Enjoy!
+If you need to configure parameter, you can verify then running:
+```bash
+java -jar blackjack-1.0-SNAPSHOT-jar-with-dependencies h
+```
+or
+```bash
+java -jar blackjack-1.0-SNAPSHOT-jar-with-dependencies help
+```
+## Enjoy
+Trying your luck!
