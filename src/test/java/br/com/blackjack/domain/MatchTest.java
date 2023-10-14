@@ -102,7 +102,7 @@ class MatchTest {
 
     @Test
     void shouldStartMatchAndEndItWhenPlayerWinsWith21Points() {
-        final var player = new Player("Winner");
+        final var player = new PlayerImpl("Winner");
         final var match = new Match(deckThatAlwaysHit21())
                 .addPlayer(player)
                 .addPlayer("Loser");
@@ -121,7 +121,7 @@ class MatchTest {
 
     @Test
     void shouldStartMatchAndEndItWhenLoserGetsMoreThan21Points() {
-        final var player = new Player("Winner");
+        final var player = new PlayerImpl("Winner");
         final var match = new Match(deckThatAlwaysGetMorePoints())
                 .addPlayer(player)
                 .addPlayer("Loser");
@@ -138,7 +138,7 @@ class MatchTest {
         assertThat(winner.points(), is(14));
     }
 
-    private Deck deckThatAlwaysHit21() {
+    private DeckImpl deckThatAlwaysHit21() {
         final var stack = new Stack<Card>() {{
            push(new Card(Suit.DIAMONDS, Value.KING));
            push(new Card(Suit.SPADES, Value.KING));
@@ -149,7 +149,7 @@ class MatchTest {
         return new FakeDeck(stack);
     }
 
-    private Deck deckThatAlwaysGetMorePoints() {
+    private DeckImpl deckThatAlwaysGetMorePoints() {
         final var stack = new Stack<Card>() {{
             push(new Card(Suit.CLUBS, Value.KING));
             push(new Card(Suit.DIAMONDS, Value.THREE));
@@ -161,7 +161,7 @@ class MatchTest {
         return new FakeDeck(stack);
     }
 
-    private static class FakeDeck extends Deck {
+    private static class FakeDeck extends DeckImpl {
 
         private final Stack<Card> cards;
 

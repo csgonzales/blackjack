@@ -16,7 +16,7 @@ class DeckTest {
 
     @Test
     void shouldShuffleDeckAndGetDifferentDrawsMostOfTimes() {
-        final var deck = new Deck();
+        final var deck = new DeckImpl();
 
         final var drawsFromFirstShuffle = shuffleAndDraw3Cards(deck);
         final var drawsFromSecondShuffle = shuffleAndDraw3Cards(deck);
@@ -37,7 +37,7 @@ class DeckTest {
 
     @Test
     void shouldFailToDrawCardsWhenThenAreNotShuffled() {
-        final var deck = new Deck();
+        final var deck = new DeckImpl();
 
         final var exception = assertThrows(CardsNotShuffledException.class, deck::draw);
         assertThat(exception, notNullValue());
@@ -46,7 +46,7 @@ class DeckTest {
 
     @Test
     void shouldFailToDrawCardsWhenNoOneLeft() {
-        final var deck = new Deck();
+        final var deck = new DeckImpl();
 
         deck.shuffle();
         for (int i = 0; i < 52; i++) {
@@ -57,7 +57,7 @@ class DeckTest {
         assertThat(exception.getMessage(), is("No cards left!"));
     }
 
-    private List<Card> shuffleAndDraw3Cards(Deck deck) {
+    private List<Card> shuffleAndDraw3Cards(DeckImpl deck) {
         deck.shuffle();
         return new ArrayList<Card>(3) {{
             add(deck.draw());

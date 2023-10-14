@@ -9,7 +9,7 @@ class PlayerTest {
 
     @Test
     void shouldCreatePlayerAndValidatePoints() {
-        final var player = new Player("Test");
+        final var player = new PlayerImpl("Test");
 
         player.addCard(new Card(Suit.HEARTS, Value.JACK));
         player.addCard(new Card(Suit.SPADES, Value.ACE));
@@ -21,7 +21,7 @@ class PlayerTest {
 
     @Test
     void shouldGuaranteeThatPlayerHasNoPointsAfterRemoveCards() {
-        final var player = new Player("Test");
+        final var player = new PlayerImpl("Test");
 
         player.addCard(new Card(Suit.HEARTS, Value.JACK));
         player.addCard(new Card(Suit.SPADES, Value.ACE));

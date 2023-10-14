@@ -27,7 +27,7 @@ public class Match {
     }
 
     public Match() {
-        this(new Deck());
+        this(Deck.newDeck());
     }
 
     public Match addPlayer(Player player) {
@@ -37,7 +37,7 @@ public class Match {
     }
 
     public Match addPlayer(String playerName) {
-        return addPlayer(new Player(playerName));
+        return addPlayer(Player.newPlayer(playerName));
     }
 
     public void start() {

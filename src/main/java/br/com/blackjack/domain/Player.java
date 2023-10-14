@@ -1,33 +1,16 @@
 package br.com.blackjack.domain;
 
-import java.util.LinkedList;
-import java.util.List;
+public interface Player {
 
-public class Player {
+    int points();
 
-    private final List<Card> cards = new LinkedList<>();
-    private String name;
+    boolean addCard(Card card);
 
-    public Player(String name) {
-        this.name = name;
-    }
+    String name();
 
-    public int points() {
-        return cards
-                .stream()
-                .mapToInt(Card::intValue)
-                .sum();
-    }
+    void removeCards();
 
-    public boolean addCard(Card card) {
-        return cards.add(card);
-    }
-
-    public String name() {
-        return name;
-    }
-
-    public void removeCards() {
-        cards.clear();
+    static Player newPlayer(String name) {
+        return new PlayerImpl(name);
     }
 }
