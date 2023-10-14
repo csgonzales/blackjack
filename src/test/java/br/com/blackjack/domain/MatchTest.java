@@ -138,7 +138,7 @@ class MatchTest {
         assertThat(winner.points(), is(14));
     }
 
-    private DeckImpl deckThatAlwaysHit21() {
+    private Deck deckThatAlwaysHit21() {
         final var stack = new Stack<Card>() {{
            push(new Card(Suit.DIAMONDS, Value.KING));
            push(new Card(Suit.SPADES, Value.KING));
@@ -149,7 +149,7 @@ class MatchTest {
         return new FakeDeck(stack);
     }
 
-    private DeckImpl deckThatAlwaysGetMorePoints() {
+    private Deck deckThatAlwaysGetMorePoints() {
         final var stack = new Stack<Card>() {{
             push(new Card(Suit.CLUBS, Value.KING));
             push(new Card(Suit.DIAMONDS, Value.THREE));
@@ -161,12 +161,10 @@ class MatchTest {
         return new FakeDeck(stack);
     }
 
-    private static class FakeDeck extends DeckImpl {
+    private record FakeDeck(Stack<Card> cards) implements Deck {
 
-        private final Stack<Card> cards;
-
-        public FakeDeck(Stack<Card> cards) {
-            this.cards = cards;
+        @Override
+        public void shuffle() {
         }
 
         @Override
